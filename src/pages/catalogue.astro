@@ -1,0 +1,273 @@
+---
+import Base from '../layouts/Base.astro';
+import { products, WHATSAPP, categories } from '../data/products.js';
+
+const base = import.meta.env.BASE_URL;
+const threepieceProducts = products.filter(p => p.category === 'threepiece');
+const sareeProducts = products.filter(p => p.category === 'saree');
+const waShareMsg = encodeURIComponent(`Aurelia Craft-এর সম্পূর্ণ কালেকশন দেখুন: https://aurelia-craft.vercel.app/catalogue/`);
+---
+<Base
+  title="সম্পূর্ণ কালেকশন — Aurelia Craft"
+  description="Aurelia Craft-এর সকল থ্রি-পিস ও শাড়ির কালেকশন। অনলাইনে অর্ডার করুন, সারা বাংলাদেশে ডেলিভারি।"
+  ogUrl="https://aurelia-craft.vercel.app/catalogue/"
+>
+
+<!-- HERO -->
+<div class="cat-hero">
+  <p class="cat-eyebrow">✦ অরেলিয়া ক্রাফট</p>
+  <h1 class="cat-title">সম্পূর্ণ <em>কালেকশন</em></h1>
+  <p class="cat-sub">থ্রি-পিস ও শাড়ি — {products.length}টি পণ্য</p>
+  <a
+    href={`https://wa.me/${WHATSAPP}?text=${waShareMsg}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn-share"
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    WhatsApp-এ শেয়ার করুন
+  </a>
+</div>
+
+<!-- THREE-PIECE SECTION -->
+<section class="cat-section">
+  <div class="cat-inner">
+    <div class="section-header reveal">
+      <p class="sec-eyebrow">✦ থ্রি-পিস কালেকশন</p>
+      <h2 class="sec-title"><em>থ্রি-পিস</em> — {threepieceProducts.length}টি পণ্য</h2>
+    </div>
+    <div class="cat-grid reveal">
+      {threepieceProducts.map(p => {
+        const badgeClass = p.badge === 'জনপ্রিয়' ? 'badge popular'
+                         : p.badge === 'লিমিটেড'  ? 'badge limited'
+                         : 'badge';
+        const waMsg = encodeURIComponent(
+          `আমি এই পণ্যটি অর্ডার করতে চাই:\n\n${p.name} — ${p.subtitle}\nঅফার মূল্য: ৳${p.price}\n\nআমার তথ্য:\nনাম: \nফোন: \nঠিকানা: \nপেমেন্ট: `
+        );
+        return (
+          <div class="cat-item reveal">
+            <a href={`${base}products/${p.slug}/`} class="cat-img-wrap">
+              <img
+                src={`${base}images/${p.image}`}
+                alt={`${p.name} — ${p.subtitle}`}
+                loading="lazy"
+                onerror="this.parentElement.classList.add('no-img'); this.style.display='none';"
+              />
+              {p.badge && <span class={badgeClass}>{p.badge}</span>}
+            </a>
+            <div class="cat-body">
+              <a href={`${base}products/${p.slug}/`} class="cat-name-link">
+                <div class="cat-name">{p.name}</div>
+                <div class="cat-sub">{p.subtitle}</div>
+              </a>
+              <div class="cat-price-row">
+                <div class="cat-price">
+                  {p.originalPrice && <span class="cat-orig">৳{p.originalPrice.toLocaleString('en-IN')}</span>}
+                  <span class="cat-sale">৳{p.price.toLocaleString('en-IN')}</span>
+                </div>
+                <a
+                  href={`https://wa.me/${WHATSAPP}?text=${waMsg}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="cat-order-btn"
+                >
+                  অর্ডার করুন
+                </a>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<!-- SAREE SECTION -->
+<section class="cat-section cat-section--alt">
+  <div class="cat-inner">
+    <div class="section-header reveal">
+      <p class="sec-eyebrow">✦ শাড়ি কালেকশন</p>
+      <h2 class="sec-title"><em>শাড়ি</em> — {sareeProducts.length}টি পণ্য</h2>
+    </div>
+    <div class="cat-grid reveal">
+      {sareeProducts.map(p => {
+        const badgeClass = p.badge === 'জনপ্রিয়' ? 'badge popular'
+                         : p.badge === 'লিমিটেড'  ? 'badge limited'
+                         : 'badge';
+        const waMsg = encodeURIComponent(
+          `আমি এই পণ্যটি অর্ডার করতে চাই:\n\n${p.name} — ${p.subtitle}\nমূল্য: ৳${p.price}\n\nআমার তথ্য:\nনাম: \nফোন: \nঠিকানা: \nপেমেন্ট: `
+        );
+        return (
+          <div class="cat-item reveal">
+            <a href={`${base}products/${p.slug}/`} class="cat-img-wrap">
+              <img
+                src={`${base}images/${p.image}`}
+                alt={`${p.name} — ${p.subtitle}`}
+                loading="lazy"
+                onerror="this.parentElement.classList.add('no-img'); this.style.display='none';"
+              />
+              {p.badge && <span class={badgeClass}>{p.badge}</span>}
+            </a>
+            <div class="cat-body">
+              <a href={`${base}products/${p.slug}/`} class="cat-name-link">
+                <div class="cat-name">{p.name}</div>
+                <div class="cat-sub">{p.subtitle}</div>
+              </a>
+              <div class="cat-price-row">
+                <div class="cat-price">
+                  <span class="cat-sale">৳{p.price.toLocaleString('en-IN')}</span>
+                </div>
+                <a
+                  href={`https://wa.me/${WHATSAPP}?text=${waMsg}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="cat-order-btn"
+                >
+                  অর্ডার করুন
+                </a>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<div class="cat-footer-cta">
+  <p>অর্ডার করতে বা যেকোনো তথ্যের জন্য WhatsApp করুন</p>
+  <a
+    href={`https://wa.me/${WHATSAPP}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn-wa-big"
+  >
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    +880 187 452 0327
+  </a>
+</div>
+
+</Base>
+
+<style>
+/* ── Hero ─────────────────────────────────────────── */
+.cat-hero {
+  background: var(--cream);
+  text-align: center;
+  padding: 110px 20px 56px;
+  border-bottom: 0.5px solid var(--border);
+}
+.cat-eyebrow {
+  font-size: 9px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--warm); margin-bottom: 12px;
+}
+.cat-title {
+  font-family: var(--ff-disp); font-size: clamp(36px,6vw,64px); font-weight: 400;
+  color: var(--dark); line-height: 1.1; margin-bottom: 10px;
+}
+.cat-title em { font-style: italic; color: var(--brown); }
+.cat-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+.btn-share {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #25D366; color: white;
+  font-size: 13px; font-weight: 700; letter-spacing: .04em;
+  padding: 12px 24px; border-radius: var(--radius);
+  transition: background var(--tr);
+}
+.btn-share:hover { background: #1ebe5d; color: white; }
+
+/* ── Sections ─────────────────────────────────────── */
+.cat-section { background: var(--cream); padding: 64px 0 80px; }
+.cat-section--alt { background: var(--cream2); border-top: 0.5px solid var(--border); }
+.cat-inner { max-width: 1200px; margin: 0 auto; padding: 0 52px; }
+.section-header { margin-bottom: 36px; }
+.sec-eyebrow {
+  font-size: 9px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--warm); margin-bottom: 8px;
+}
+.sec-title {
+  font-family: var(--ff-disp); font-size: clamp(26px,3.5vw,40px);
+  font-weight: 400; color: var(--dark); line-height: 1.15;
+}
+.sec-title em { font-style: italic; color: var(--brown); }
+
+/* ── Grid ─────────────────────────────────────────── */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+/* ── Item ─────────────────────────────────────────── */
+.cat-item {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: box-shadow var(--tr), transform var(--tr);
+}
+.cat-item:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+
+.cat-img-wrap {
+  display: block; position: relative;
+  aspect-ratio: 3/4; overflow: hidden;
+  background: var(--cream2);
+}
+.cat-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .5s ease;
+}
+.cat-item:hover .cat-img-wrap img { transform: scale(1.04); }
+.cat-img-wrap.no-img::after { content: '👗'; font-size: 48px; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.cat-img-wrap .badge { position: absolute; top: 12px; left: 12px; }
+
+.cat-body { padding: 14px 16px 16px; }
+.cat-name-link { display: block; margin-bottom: 10px; }
+.cat-name {
+  font-family: var(--ff-disp); font-size: 17px; font-weight: 400;
+  color: var(--dark); line-height: 1.2; margin-bottom: 2px;
+}
+.cat-sub { font-size: 11px; color: var(--muted); }
+
+.cat-price-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 10px; border-top: 0.5px solid var(--border);
+}
+.cat-price { display: flex; align-items: baseline; gap: 5px; }
+.cat-orig { font-size: 11px; color: var(--muted); text-decoration: line-through; }
+.cat-sale { font-family: var(--ff-disp); font-size: 19px; font-weight: 400; color: var(--dark); }
+.cat-order-btn {
+  font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--brown); border-bottom: 0.5px solid var(--brown);
+  padding-bottom: 1px; white-space: nowrap;
+  transition: color var(--tr), border-color var(--tr);
+}
+.cat-order-btn:hover { color: #25D366; border-color: #25D366; }
+
+/* ── Footer CTA ───────────────────────────────────── */
+.cat-footer-cta {
+  background: var(--dark); color: white;
+  text-align: center; padding: 48px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+}
+.cat-footer-cta p { font-size: 15px; color: rgba(255,255,255,.7); }
+.btn-wa-big {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #25D366; color: white;
+  font-size: 16px; font-weight: 700;
+  padding: 16px 36px; border-radius: var(--radius);
+  transition: background var(--tr);
+}
+.btn-wa-big:hover { background: #1ebe5d; color: white; }
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .cat-inner { padding: 0 20px; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .cat-hero { padding: 96px 20px 40px; }
+}
+@media (max-width: 400px) {
+  .cat-grid { grid-template-columns: 1fr; }
+}
+</style>

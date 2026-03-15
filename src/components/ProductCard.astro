@@ -25,8 +25,11 @@ const badgeClass = product.badge === 'জনপ্রিয়' ? 'badge popular
     <p class="p-desc">{product.description}</p>
     <div class="p-foot">
       <div class="p-price">
+        {product.originalPrice && (
+          <span class="p-orig">৳{product.originalPrice.toLocaleString('en-IN')}</span>
+        )}
         ৳{product.price.toLocaleString('en-IN')}
-        <small>থেকে</small>
+        {!product.originalPrice && <small>থেকে</small>}
       </div>
       <span class="p-order-link">অর্ডার করুন →</span>
     </div>
@@ -92,8 +95,10 @@ const badgeClass = product.badge === 'জনপ্রিয়' ? 'badge popular
 }
 .p-price {
   font-family: var(--ff-disp); font-size: 22px; font-weight: 400; color: var(--dark);
+  display: flex; align-items: baseline; gap: 6px;
 }
 .p-price small { font-family: var(--ff-body); font-size: 10px; color: var(--muted); font-weight: 400; }
+.p-orig { font-size: 13px; color: var(--muted); text-decoration: line-through; font-family: var(--ff-body); font-weight: 400; }
 .p-order-link {
   font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
   color: var(--brown); border-bottom: 0.5px solid var(--brown);

@@ -65,7 +65,13 @@ const waMsg = encodeURIComponent(
       </p>
       <h1 class="prod-name">{product.name}</h1>
       {product.subtitle && <p class="prod-sub">{product.subtitle}</p>}
-      <div class="prod-price">৳{product.price.toLocaleString('en-IN')} <small>থেকে</small></div>
+      <div class="prod-price">
+        {product.originalPrice && (
+          <span class="prod-orig">৳{product.originalPrice.toLocaleString('en-IN')}</span>
+        )}
+        ৳{product.price.toLocaleString('en-IN')}
+        {!product.originalPrice && <small>থেকে</small>}
+      </div>
 
       <p class="prod-desc">{product.description}</p>
 
@@ -143,8 +149,9 @@ const waMsg = encodeURIComponent(
 .prod-cat { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--warm); margin-bottom: 8px; margin-top: 8px; }
 .prod-name { font-family: var(--ff-disp); font-size: clamp(32px,4vw,48px); font-weight: 400; line-height: 1.1; color: var(--dark); margin-bottom: 4px; }
 .prod-sub { font-size: 15px; color: var(--muted); margin-bottom: 18px; }
-.prod-price { font-family: var(--ff-disp); font-size: 32px; font-weight: 400; color: var(--dark); margin-bottom: 22px; }
+.prod-price { font-family: var(--ff-disp); font-size: 32px; font-weight: 400; color: var(--dark); margin-bottom: 22px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .prod-price small { font-family: var(--ff-body); font-size: 12px; color: var(--muted); }
+.prod-orig { font-size: 18px; color: var(--muted); text-decoration: line-through; font-family: var(--ff-body); font-weight: 400; }
 .prod-desc { font-size: 14px; color: var(--muted); line-height: 1.85; margin-bottom: 24px; }
 
 .prod-specs { display: flex; flex-direction: column; gap: 0; margin-bottom: 22px; border-top: 0.5px solid var(--border); }
