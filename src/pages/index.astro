@@ -126,7 +126,19 @@ const saree      = products.filter(p => p.category === 'saree');
   .trust-item { border-right: none; border-bottom: 0.5px solid rgba(247,243,237,.07); }
   .hero-stats { grid-template-columns: repeat(2,1fr); }
 }
+@media (max-width: 768px) {
+  .sec { padding: 60px 0; }
+  .trust-bar { grid-template-columns: 1fr 1fr; }
+}
 @media (max-width: 600px) {
   .trust-bar { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .sec-inner { padding: 0 14px; }
+  .hero-body { padding: 72px 16px 80px; }
+  .hero-tagline { font-size: 13px; }
+  .hero-actions { flex-direction: column; align-items: center; gap: 10px; }
+  .h-btn-light, .h-btn-ghost { width: 100%; max-width: 280px; text-align: center; }
+  .p-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; }
 }
 </style>

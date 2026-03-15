@@ -116,4 +116,14 @@ const badgeClass = product.badge === 'জনপ্রিয়' ? 'badge popular
 }
 .p-cart-btn:hover { background: var(--brown); }
 .p-cart-btn:disabled { background: var(--warm); cursor: default; }
+
+@media (max-width: 480px) {
+  .p-body { padding: 12px 14px 16px; }
+  .p-name { font-size: 15px; }
+  .p-sub { font-size: 10px; }
+  .p-desc { font-size: 11px; margin-bottom: 12px; }
+  .p-price { font-size: 17px; }
+  .p-orig { font-size: 11px; }
+  .p-cart-btn { font-size: 10px; padding: 9px 0; margin-top: 10px; }
+}
 </style>

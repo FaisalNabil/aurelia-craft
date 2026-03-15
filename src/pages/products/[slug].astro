@@ -203,4 +203,19 @@ const ogImage = new URL(`/images/${product.image}`, Astro.site).href;
   .related-inner { padding: 0 20px; }
   .prod-cta { flex-direction: column; }
 }
+@media (max-width: 768px) {
+  .related-sec { padding: 48px 0; }
+  .product-sec { padding: 28px 0 56px; }
+}
+@media (max-width: 480px) {
+  .breadcrumb-wrap { padding: 78px 14px 0; }
+  .product-inner { padding: 0 14px; }
+  .related-inner { padding: 0 14px; }
+  .prod-price { font-size: 26px; }
+  .prod-name { font-size: clamp(26px, 7vw, 42px); }
+  .prod-trust { gap: 10px; }
+  .pt-item { font-size: 10px; }
+  .p-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; }
+  .spec-row { grid-template-columns: 68px 1fr; font-size: 12px; }
+}
 </style>
