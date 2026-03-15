@@ -6,7 +6,7 @@
  * ============================================================
  */
 
-export const WHATSAPP = '8801XXXXXXXXX'; // ← আপনার নম্বর
+export const WHATSAPP = '8801874520327';
 
 export const products = [
   {

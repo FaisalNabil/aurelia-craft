@@ -1,7 +1,6 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://faisalnabil.github.io',
-  base: '/aurelia-craft',
+  site: 'https://aurelia-craft.vercel.app',
   output: 'static',
 });

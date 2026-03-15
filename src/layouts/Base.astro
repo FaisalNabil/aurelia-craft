@@ -5,7 +5,7 @@ const base = import.meta.env.BASE_URL;
 const siteName = 'Aurelia Craft';
 const siteDesc = description || 'বাংলাদেশের নারীদের জন্য সেরা মানের থ্রি-পিস ও শাড়ির এক্সক্লুসিভ কালেকশন।';
 const pageTitle = title ? `${title} — ${siteName}` : `${siteName} — থ্রি-পিস ও শাড়ির কালেকশন`;
-const pageUrl = ogUrl || 'https://faisalnabil.github.io/aurelia-craft/';
+const pageUrl = ogUrl || 'https://aurelia-craft.vercel.app/';
 const pageImg = ogImage || `${base}images/cover.png`;
 ---
 <!DOCTYPE html>
@@ -22,7 +22,11 @@ const pageImg = ogImage || `${base}images/cover.png`;
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={siteDesc} />
   <meta property="og:image" content={pageImg} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:type" content="image/png" />
   <meta property="og:url" content={pageUrl} />
+  <meta property="og:locale" content="bn_BD" />
 
   <!-- Twitter card -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -70,8 +74,8 @@ const pageImg = ogImage || `${base}images/cover.png`;
   </div>
   <div class="footer-col">
     <h6>যোগাযোগ</h6>
-    <a href="https://facebook.com/aurelia.craft.home" target="_blank">Facebook Page</a>
-    <a href="https://wa.me/8801XXXXXXXXX" target="_blank">WhatsApp</a>
+    <a href="https://facebook.com/aurelia.craft.home" target="_blank" rel="noopener noreferrer">Facebook Page</a>
+    <a href="https://wa.me/8801874520327" target="_blank" rel="noopener noreferrer">WhatsApp</a>
     <a href={`${base}#order`}>অর্ডার ফর্ম</a>
   </div>
 </footer>
