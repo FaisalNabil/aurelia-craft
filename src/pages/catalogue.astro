@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { products, WHATSAPP, categories } from '../data/products.js';
+import { products, WHATSAPP } from '../data/products.js';
 
 const base = import.meta.env.BASE_URL;
 const threepieceProducts = products.filter(p => p.category === 'threepiece');
@@ -41,9 +41,6 @@ const waShareMsg = encodeURIComponent(`Aurelia Craft-এর সম্পূর�
         const badgeClass = p.badge === 'জনপ্রিয়' ? 'badge popular'
                          : p.badge === 'লিমিটেড'  ? 'badge limited'
                          : 'badge';
-        const waMsg = encodeURIComponent(
-          `আমি এই পণ্যটি অর্ডার করতে চাই:\n\n${p.name} — ${p.subtitle}\nঅফার মূল্য: ৳${p.price}\n\nআমার তথ্য:\nনাম: \nফোন: \nঠিকানা: \nপেমেন্ট: `
-        );
         return (
           <div class="cat-item reveal">
             <a href={`${base}products/${p.slug}/`} class="cat-img-wrap">
@@ -65,15 +62,15 @@ const waShareMsg = encodeURIComponent(`Aurelia Craft-এর সম্পূর�
                   {p.originalPrice && <span class="cat-orig">৳{p.originalPrice.toLocaleString('en-IN')}</span>}
                   <span class="cat-sale">৳{p.price.toLocaleString('en-IN')}</span>
                 </div>
-                <a
-                  href={`https://wa.me/${WHATSAPP}?text=${waMsg}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="cat-order-btn"
-                >
-                  অর্ডার করুন
-                </a>
               </div>
+              <button
+                class="cat-cart-btn"
+                data-slug={p.slug}
+                data-name={p.name}
+                data-subtitle={p.subtitle || ''}
+                data-price={p.price}
+                data-image={p.image}
+              >কার্টে যোগ করুন</button>
             </div>
           </div>
         );
@@ -94,9 +91,6 @@ const waShareMsg = encodeURIComponent(`Aurelia Craft-এর সম্পূর�
         const badgeClass = p.badge === 'জনপ্রিয়' ? 'badge popular'
                          : p.badge === 'লিমিটেড'  ? 'badge limited'
                          : 'badge';
-        const waMsg = encodeURIComponent(
-          `আমি এই পণ্যটি অর্ডার করতে চাই:\n\n${p.name} — ${p.subtitle}\nমূল্য: ৳${p.price}\n\nআমার তথ্য:\nনাম: \nফোন: \nঠিকানা: \nপেমেন্ট: `
-        );
         return (
           <div class="cat-item reveal">
             <a href={`${base}products/${p.slug}/`} class="cat-img-wrap">
@@ -117,15 +111,15 @@ const waShareMsg = encodeURIComponent(`Aurelia Craft-এর সম্পূর�
                 <div class="cat-price">
                   <span class="cat-sale">৳{p.price.toLocaleString('en-IN')}</span>
                 </div>
-                <a
-                  href={`https://wa.me/${WHATSAPP}?text=${waMsg}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="cat-order-btn"
-                >
-                  অর্ডার করুন
-                </a>
               </div>
+              <button
+                class="cat-cart-btn"
+                data-slug={p.slug}
+                data-name={p.name}
+                data-subtitle={p.subtitle || ''}
+                data-price={p.price}
+                data-image={p.image}
+              >কার্টে যোগ করুন</button>
             </div>
           </div>
         );
@@ -149,6 +143,24 @@ const waShareMsg = encodeURIComponent(`Aurelia Craft-এর সম্পূর�
 </div>
 
 </Base>
+
+<script>
+  document.querySelectorAll('.cat-cart-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      window.AC && window.AC.addToCart({
+        slug: btn.dataset.slug,
+        name: btn.dataset.name,
+        subtitle: btn.dataset.subtitle,
+        price: +btn.dataset.price,
+        image: btn.dataset.image,
+      });
+      const orig = btn.textContent;
+      btn.textContent = '✓ যোগ হয়েছে';
+      btn.disabled = true;
+      setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 1400);
+    });
+  });
+</script>
 
 <style>
 /* ── Hero ─────────────────────────────────────────── */
@@ -237,13 +249,15 @@ const waShareMsg = encodeURIComponent(`Aurelia Craft-এর সম্পূর�
 .cat-price { display: flex; align-items: baseline; gap: 5px; }
 .cat-orig { font-size: 11px; color: var(--muted); text-decoration: line-through; }
 .cat-sale { font-family: var(--ff-disp); font-size: 19px; font-weight: 400; color: var(--dark); }
-.cat-order-btn {
-  font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-  color: var(--brown); border-bottom: 0.5px solid var(--brown);
-  padding-bottom: 1px; white-space: nowrap;
-  transition: color var(--tr), border-color var(--tr);
+.cat-cart-btn {
+  width: 100%; margin-top: 10px;
+  background: var(--dark); color: var(--cream);
+  font-family: var(--ff-body); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 9px 0; border-radius: var(--radius); border: none; cursor: pointer;
+  transition: background var(--tr);
 }
-.cat-order-btn:hover { color: #25D366; border-color: #25D366; }
+.cat-cart-btn:hover { background: var(--brown); }
+.cat-cart-btn:disabled { background: var(--warm); cursor: default; }
 
 /* ── Footer CTA ───────────────────────────────────── */
 .cat-footer-cta {

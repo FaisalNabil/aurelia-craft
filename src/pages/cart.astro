@@ -1,0 +1,255 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+const WHATSAPP = '8801874520327';
+---
+<Base title="কার্ট ও অর্ডার" description="আপনার বাছাই করা পণ্যের তালিকা ও অর্ডার ফর্ম।">
+
+<div class="breadcrumb-wrap">
+  <nav class="breadcrumb">
+    <a href={base}>হোম</a>
+    <span class="bc-sep">›</span>
+    <span>কার্ট</span>
+  </nav>
+</div>
+
+<section class="cart-sec">
+  <div class="cart-inner">
+
+    <!-- Empty state -->
+    <div id="cart-empty" class="cart-empty" style="display:none">
+      <div class="empty-icon">🛒</div>
+      <h2 class="empty-h">কার্ট খালি আছে</h2>
+      <p class="empty-p">কোনো পণ্য যোগ করা হয়নি। কালেকশন থেকে পণ্য বেছে নিন।</p>
+      <a href={base} class="btn-dark-link">কেনাকাটা শুরু করুন →</a>
+    </div>
+
+    <!-- Cart content -->
+    <div id="cart-content" style="display:none">
+      <div class="cart-layout">
+
+        <!-- Items -->
+        <div class="cart-items-col">
+          <h1 class="cart-h1">আপনার কার্ট</h1>
+          <div id="cart-items-list"></div>
+        </div>
+
+        <!-- Summary + Order form -->
+        <div class="cart-sidebar">
+          <div class="summary-box">
+            <h3 class="summary-hdg">অর্ডার সারসংক্ষেপ</h3>
+            <div class="summary-row">
+              <span id="summary-count">০টি পণ্য</span>
+              <span id="summary-total" class="summary-total"></span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-row summary-grand">
+              <span>মোট</span>
+              <span id="summary-grand"></span>
+            </div>
+          </div>
+
+          <div class="form-shell">
+            <h3 class="form-hdg">ডেলিভারি তথ্য</h3>
+            <form id="cart-order-form" class="f-grid">
+              <div class="f-group full">
+                <label class="f-label">আপনার নাম *</label>
+                <input class="f-input" id="co-name" placeholder="পূর্ণ নাম" required />
+              </div>
+              <div class="f-group full">
+                <label class="f-label">মোবাইল নম্বর *</label>
+                <input class="f-input" id="co-phone" type="tel" placeholder="01XXXXXXXXX" required />
+              </div>
+              <div class="f-group full">
+                <label class="f-label">সম্পূর্ণ ঠিকানা *</label>
+                <textarea class="f-input" id="co-address" placeholder="বাড়ি/গ্রাম, উপজেলা, জেলা" required></textarea>
+              </div>
+              <div class="f-group full">
+                <label class="f-label">পেমেন্ট পদ্ধতি *</label>
+                <select class="f-input" id="co-pay" required>
+                  <option value="">— বেছে নিন —</option>
+                  <option value="ক্যাশ অন ডেলিভারি (COD)">ক্যাশ অন ডেলিভারি (COD)</option>
+                  <option value="বিকাশ অ্যাডভান্স">বিকাশ অ্যাডভান্স</option>
+                </select>
+              </div>
+              <div class="f-group full">
+                <label class="f-label">অতিরিক্ত মন্তব্য</label>
+                <textarea class="f-input" id="co-note" placeholder="রঙ, সাইজ বা অন্য তথ্য..."></textarea>
+              </div>
+              <div class="f-group full">
+                <button type="submit" class="btn-whatsapp">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  WhatsApp-এ অর্ডার করুন
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</Base>
+
+<script define:vars={{ WHATSAPP, base }}>
+  function fmt(n) { return '৳' + n.toLocaleString('en-IN'); }
+
+  function renderCart() {
+    const cart = window.AC ? window.AC.getCart() : JSON.parse(localStorage.getItem('ac_cart') || '[]');
+    const empty = document.getElementById('cart-empty');
+    const content = document.getElementById('cart-content');
+
+    if (cart.length === 0) {
+      empty.style.display = 'block';
+      content.style.display = 'none';
+      return;
+    }
+    empty.style.display = 'none';
+    content.style.display = 'block';
+
+    // Render items
+    const list = document.getElementById('cart-items-list');
+    list.innerHTML = cart.map((item, i) => `
+      <div class="cart-row" data-index="${i}">
+        <div class="cart-img-wrap">
+          <img src="${base}images/${item.image}" alt="${item.name}" onerror="this.style.display='none'" />
+        </div>
+        <div class="cart-row-info">
+          <div class="cart-row-name">${item.name}</div>
+          ${item.subtitle ? `<div class="cart-row-sub">${item.subtitle}</div>` : ''}
+          <div class="cart-row-price">${fmt(item.price)}</div>
+        </div>
+        <div class="cart-row-qty">
+          <button class="qty-btn" onclick="changeQty(${i}, -1)">−</button>
+          <span class="qty-val">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
+        </div>
+        <div class="cart-row-subtotal">${fmt(item.price * item.qty)}</div>
+        <button class="cart-remove" onclick="removeItem(${i})" aria-label="মুছুন">✕</button>
+      </div>
+    `).join('');
+
+    // Summary
+    const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+    const count = cart.reduce((s, c) => s + c.qty, 0);
+    document.getElementById('summary-count').textContent = count + 'টি পণ্য';
+    document.getElementById('summary-total').textContent = fmt(total);
+    document.getElementById('summary-grand').textContent = fmt(total);
+  }
+
+  window.changeQty = function(index, delta) {
+    const cart = window.AC ? window.AC.getCart() : JSON.parse(localStorage.getItem('ac_cart') || '[]');
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) cart.splice(index, 1);
+    if (window.AC) { window.AC.saveCart(cart); window.AC.updateCartBadge(); }
+    else localStorage.setItem('ac_cart', JSON.stringify(cart));
+    renderCart();
+  };
+
+  window.removeItem = function(index) {
+    const cart = window.AC ? window.AC.getCart() : JSON.parse(localStorage.getItem('ac_cart') || '[]');
+    cart.splice(index, 1);
+    if (window.AC) { window.AC.saveCart(cart); window.AC.updateCartBadge(); }
+    else localStorage.setItem('ac_cart', JSON.stringify(cart));
+    renderCart();
+  };
+
+  document.getElementById('cart-order-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const cart = window.AC ? window.AC.getCart() : JSON.parse(localStorage.getItem('ac_cart') || '[]');
+    if (cart.length === 0) return;
+
+    const name    = document.getElementById('co-name').value.trim();
+    const phone   = document.getElementById('co-phone').value.trim();
+    const address = document.getElementById('co-address').value.trim();
+    const pay     = document.getElementById('co-pay').value;
+    const note    = document.getElementById('co-note').value.trim();
+
+    const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+    const lines = cart.map((c, i) =>
+      `${i + 1}. ${c.name}${c.subtitle ? ' — ' + c.subtitle : ''} × ${c.qty} = ${fmt(c.price * c.qty)}`
+    ).join('\n');
+
+    const msg = `আমি নিম্নলিখিত পণ্যগুলো অর্ডার করতে চাই:\n\n${lines}\n\nমোট: ${fmt(total)}\n\nআমার তথ্য:\nনাম: ${name}\nফোন: ${phone}\nঠিকানা: ${address}\nপেমেন্ট: ${pay}${note ? '\nমন্তব্য: ' + note : ''}`;
+
+    window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
+  });
+
+  document.addEventListener('DOMContentLoaded', renderCart);
+</script>
+
+<style>
+.breadcrumb-wrap { padding: 86px 52px 0; background: var(--cream); }
+.breadcrumb { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.breadcrumb a { color: var(--muted); transition: color var(--tr); }
+.breadcrumb a:hover { color: var(--dark); }
+.bc-sep { opacity: .5; }
+
+.cart-sec { background: var(--cream); padding: 40px 0 100px; }
+.cart-inner { max-width: 1200px; margin: 0 auto; padding: 0 52px; }
+
+/* Empty */
+.cart-empty { text-align: center; padding: 100px 20px; }
+.empty-icon { font-size: 60px; margin-bottom: 20px; }
+.empty-h { font-family: var(--ff-disp); font-size: 36px; font-weight: 400; color: var(--dark); margin-bottom: 10px; }
+.empty-p { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+.btn-dark-link { display: inline-block; background: var(--dark); color: var(--cream); font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 14px 32px; border-radius: var(--radius); transition: background var(--tr); }
+.btn-dark-link:hover { background: var(--brown); color: var(--cream); }
+
+/* Layout */
+.cart-h1 { font-family: var(--ff-disp); font-size: clamp(28px,4vw,42px); font-weight: 400; color: var(--dark); margin-bottom: 28px; }
+.cart-layout { display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: start; }
+
+/* Cart rows */
+.cart-row { display: grid; grid-template-columns: 72px 1fr auto auto auto; gap: 16px; align-items: center; padding: 18px 0; border-bottom: 0.5px solid var(--border); }
+.cart-img-wrap { width: 72px; height: 96px; border-radius: var(--radius); overflow: hidden; background: var(--cream2); flex-shrink: 0; }
+.cart-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.cart-row-name { font-family: var(--ff-disp); font-size: 18px; font-weight: 400; color: var(--dark); line-height: 1.2; }
+.cart-row-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.cart-row-price { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.cart-row-qty { display: flex; align-items: center; gap: 8px; }
+.qty-btn { width: 28px; height: 28px; border-radius: 50%; border: 0.5px solid var(--border2); background: var(--surface); color: var(--dark); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background var(--tr); }
+.qty-btn:hover { background: var(--cream2); }
+.qty-val { font-size: 14px; font-weight: 600; color: var(--dark); min-width: 20px; text-align: center; }
+.cart-row-subtotal { font-family: var(--ff-disp); font-size: 18px; color: var(--dark); min-width: 80px; text-align: right; }
+.cart-remove { background: none; border: none; color: var(--muted); font-size: 14px; cursor: pointer; padding: 4px 6px; transition: color var(--tr); }
+.cart-remove:hover { color: var(--dark); }
+
+/* Summary */
+.summary-box { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; }
+.summary-hdg { font-family: var(--ff-disp); font-size: 20px; font-weight: 400; color: var(--dark); margin-bottom: 16px; }
+.summary-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+.summary-total { color: var(--dark); font-weight: 500; }
+.summary-divider { border: none; border-top: 0.5px solid var(--border); margin: 14px 0; }
+.summary-grand { font-family: var(--ff-disp); font-size: 18px; color: var(--dark); font-weight: 400; }
+
+/* Form */
+.form-shell { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 28px; }
+.form-hdg { font-family: var(--ff-disp); font-size: 22px; font-weight: 400; color: var(--dark); margin-bottom: 20px; }
+.f-grid { display: flex; flex-direction: column; gap: 14px; }
+.f-group { display: flex; flex-direction: column; gap: 6px; }
+.f-group.full { grid-column: 1/-1; }
+.f-label { font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.f-input { background: var(--cream); border: 0.5px solid var(--border); color: var(--text); font-family: var(--ff-body); font-size: 14px; padding: 11px 14px; border-radius: var(--radius); outline: none; transition: border-color var(--tr); width: 100%; }
+.f-input:focus { border-color: var(--warm); box-shadow: 0 0 0 3px rgba(155,122,82,.09); }
+.f-input::placeholder { color: var(--cream3); }
+select.f-input option { background: white; }
+textarea.f-input { resize: vertical; min-height: 72px; }
+.btn-whatsapp { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: #25D366; color: white; font-family: var(--ff-body); font-size: 13px; font-weight: 700; letter-spacing: .06em; padding: 14px 28px; border-radius: var(--radius); border: none; cursor: pointer; transition: background var(--tr); }
+.btn-whatsapp:hover { background: #1ebe5d; }
+
+@media (max-width: 900px) {
+  .breadcrumb-wrap { padding: 82px 20px 0; }
+  .cart-inner { padding: 0 20px; }
+  .cart-layout { grid-template-columns: 1fr; gap: 32px; }
+  .cart-row { grid-template-columns: 60px 1fr auto auto; }
+  .cart-row-subtotal { display: none; }
+}
+@media (max-width: 600px) {
+  .cart-row { grid-template-columns: 56px 1fr auto; gap: 12px; }
+  .cart-row-qty { display: none; }
+}
+</style>
