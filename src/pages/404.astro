@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+---
+<Base title="পাওয়া যায়নি">
+  <div style="min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 20px 60px;">
+    <div>
+      <div style="font-family:var(--ff-disp);font-size:96px;font-weight:300;color:var(--cream3);line-height:1;">404</div>
+      <h1 style="font-family:var(--ff-disp);font-size:32px;font-weight:400;color:var(--dark);margin:16px 0 12px;">পৃষ্ঠাটি পাওয়া যায়নি</h1>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:32px;">আপনি যে পৃষ্ঠাটি খুঁজছেন তা এখানে নেই।</p>
+      <a href={base} class="btn-dark">হোমে ফিরে যান</a>
+    </div>
+  </div>
+</Base>

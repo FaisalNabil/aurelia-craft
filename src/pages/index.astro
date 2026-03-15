@@ -1,0 +1,225 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products } from '../data/products.js';
+const base = import.meta.env.BASE_URL;
+const threePiece = products.filter(p => p.category === 'threepiece');
+const saree      = products.filter(p => p.category === 'saree');
+---
+<Base>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-body">
+    <div class="hero-logo-ring">
+      <img src={`${base}images/logo.jpg`} alt="Aurelia Craft" />
+    </div>
+    <p class="hero-eyebrow">✦ এক্সক্লুসিভ কালেকশন · ESTD 2023</p>
+    <h1 class="hero-h1">Aurelia<br /><em>Craft</em></h1>
+    <p class="hero-tagline">
+      বাংলাদেশের নারীদের জন্য প্রিমিয়াম থ্রি-পিস ও শাড়ির কালেকশন —<br />ঐতিহ্য ও আধুনিকতার অনন্য মিলন।
+    </p>
+    <div class="hero-actions">
+      <a href="#catalog" class="h-btn-light">কালেকশন দেখুন</a>
+      <a href="#order"   class="h-btn-ghost">অর্ডার করুন</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="h-stat"><div class="h-stat-n">৫০০+</div><div class="h-stat-l">সন্তুষ্ট কাস্টমার</div></div>
+    <div class="h-stat"><div class="h-stat-n">৪৮h</div><div class="h-stat-l">ডেলিভারি সময়</div></div>
+    <div class="h-stat"><div class="h-stat-n">১০০%</div><div class="h-stat-l">অরিজিনাল কোয়ালিটি</div></div>
+    <div class="h-stat"><div class="h-stat-n">২০২৩</div><div class="h-stat-l">প্রতিষ্ঠিত</div></div>
+  </div>
+</section>
+
+<!-- ══ TRUST BAR ══ -->
+<div class="trust-bar">
+  <div class="trust-item"><span class="t-icon">📦</span><div><div class="t-title">সারা বাংলাদেশে ডেলিভারি</div><div class="t-sub">৪৮–৭২ ঘণ্টায় দরজায়</div></div></div>
+  <div class="trust-item"><span class="t-icon">💳</span><div><div class="t-title">সহজ পেমেন্ট</div><div class="t-sub">bKash · নগদ · Cash on Delivery</div></div></div>
+  <div class="trust-item"><span class="t-icon">🔄</span><div><div class="t-title">রিটার্ন পলিসি</div><div class="t-sub">পছন্দ না হলে ফেরত</div></div></div>
+  <div class="trust-item"><span class="t-icon">🧵</span><div><div class="t-title">প্রিমিয়াম কোয়ালিটি</div><div class="t-sub">হাতে বাছাই করা কাপড়</div></div></div>
+</div>
+
+<!-- ══ CATALOG ══ -->
+<section class="sec" id="catalog">
+  <div class="sec-inner">
+
+    <!-- Three-piece -->
+    <div class="sec-header reveal">
+      <p class="sec-eyebrow">✦ থ্রি-পিস কালেকশন</p>
+      <h2 class="sec-title">প্রতিটি থ্রি-পিসে<br /><em>ঐতিহ্যের ছোঁয়া</em></h2>
+      <p class="sec-sub">জয়পুরি, বাঁধনি, ইকাত — প্রতিটি পিস যত্ন সহকারে বাছাই।</p>
+    </div>
+    <div class="p-grid reveal">
+      {threePiece.map(p => <ProductCard product={p} />)}
+    </div>
+
+    <!-- Saree -->
+    {saree.length > 0 && (
+      <>
+        <div class="sec-header reveal" style="margin-top: 80px;">
+          <p class="sec-eyebrow">✦ শাড়ি কালেকশন</p>
+          <h2 class="sec-title">শাড়িতে যে সৌন্দর্য<br /><em>তা অতুলনীয়</em></h2>
+          <p class="sec-sub">জামদানি, মসলিন — বাংলাদেশের ঐতিহ্যবাহী শাড়ির সেরা কালেকশন।</p>
+        </div>
+        <div class="p-grid reveal">
+          {saree.map(p => <ProductCard product={p} />)}
+        </div>
+      </>
+    )}
+
+  </div>
+</section>
+
+<!-- ══ ORDER ══ -->
+<section class="sec order-sec" id="order">
+  <div class="sec-inner">
+    <div class="order-grid">
+      <div class="order-info reveal">
+        <p class="sec-eyebrow">✦ অর্ডার করুন</p>
+        <h2 class="sec-title">সহজে অর্ডার<br /><em>করুন এখনই</em></h2>
+        <p class="order-desc">ফর্মটি পূরণ করুন — আমরা ২৪ ঘণ্টার মধ্যে আপনার নম্বরে যোগাযোগ করব।</p>
+        <ul class="trust-list">
+          <li><span class="t-dot"></span>অর্ডার নিশ্চিতের পর ডেলিভারি শুরু</li>
+          <li><span class="t-dot"></span>Cash on Delivery — ঘরে পেয়ে পেমেন্ট</li>
+          <li><span class="t-dot"></span>পছন্দ না হলে রিটার্নের সুবিধা</li>
+          <li><span class="t-dot"></span>সরাসরি WhatsApp-এও অর্ডার করা যাবে</li>
+        </ul>
+        <div class="pay-chips">
+          <span class="chip">bKash</span>
+          <span class="chip">নগদ</span>
+          <span class="chip">Rocket</span>
+          <span class="chip">Cash on Delivery</span>
+        </div>
+      </div>
+      <div class="form-shell reveal">
+        <h3 class="form-hdg">অর্ডার ফর্ম</h3>
+        <form id="order-form" class="f-grid" onsubmit="submitOrder(event)">
+          <div class="f-group"><label class="f-label">আপনার নাম *</label><input class="f-input" id="fn" placeholder="পূর্ণ নাম" required /></div>
+          <div class="f-group"><label class="f-label">মোবাইল নম্বর *</label><input class="f-input" id="fp" type="tel" placeholder="01XXXXXXXXX" required /></div>
+          <div class="f-group full"><label class="f-label">সম্পূর্ণ ঠিকানা *</label><input class="f-input" id="fa" placeholder="বাড়ি/গ্রাম, উপজেলা, জেলা" required /></div>
+          <div class="f-group">
+            <label class="f-label">পণ্য বেছে নিন *</label>
+            <select class="f-input" id="fprod" required>
+              <option value="">— বেছে নিন —</option>
+              {products.map(p => (
+                <option value={`${p.name} — ${p.subtitle}`}>
+                  {p.name}{p.subtitle ? ` — ${p.subtitle}` : ''}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div class="f-group">
+            <label class="f-label">পেমেন্ট পদ্ধতি *</label>
+            <select class="f-input" id="fpay" required>
+              <option value="">— বেছে নিন —</option>
+              <option>Cash on Delivery (COD)</option>
+              <option>bKash (অ্যাডভান্স)</option>
+              <option>নগদ (অ্যাডভান্স)</option>
+              <option>Rocket (অ্যাডভান্স)</option>
+            </select>
+          </div>
+          <div class="f-group full"><label class="f-label">মন্তব্য</label><textarea class="f-input" id="fnote" placeholder="রঙ, সাইজ বা অন্য তথ্য..."></textarea></div>
+          <div class="f-group full"><button type="submit" class="btn-dark" style="width:100%;padding:14px;font-size:13px;">✦ অর্ডার করুন</button></div>
+          <p class="f-note">অর্ডার করলে WhatsApp-এ message যাবে। আমরা নিশ্চিত করব।</p>
+        </form>
+        <div id="form-success" style="display:none; text-align:center; padding:40px 0;">
+          <div style="font-size:44px;margin-bottom:14px;">✅</div>
+          <h4 style="font-family:var(--ff-disp);font-size:26px;font-weight:400;color:var(--dark);margin-bottom:10px;">অর্ডার পাওয়া গেছে!</h4>
+          <p style="font-size:13px;color:var(--muted);line-height:1.9;">ধন্যবাদ! আমরা শীঘ্রই যোগাযোগ করব।<br /><a href="https://wa.me/8801XXXXXXXXX" style="color:var(--brown);font-weight:600;">WhatsApp করুন →</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</Base>
+
+<script>
+function submitOrder(e) {
+  e.preventDefault();
+  const msg = encodeURIComponent(
+    `নতুন অর্ডার — Aurelia Craft\n\nনাম: ${document.getElementById('fn').value}\nফোন: ${document.getElementById('fp').value}\nঠিকানা: ${document.getElementById('fa').value}\nপণ্য: ${document.getElementById('fprod').value}\nপেমেন্ট: ${document.getElementById('fpay').value}\nমন্তব্য: ${document.getElementById('fnote').value || 'নেই'}`
+  );
+  window.open(`https://wa.me/8801XXXXXXXXX?text=${msg}`, '_blank');
+  document.getElementById('order-form').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+</script>
+
+<style>
+/* HERO */
+.hero { min-height: 100vh; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background-image: url('/aurelia-craft/images/cover.png'); background-size: cover; background-position: center 30%; transform: scale(1.04); animation: heroZoom 12s ease forwards; }
+@keyframes heroZoom { to { transform: scale(1); } }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(28,21,16,.42) 0%, rgba(28,21,16,.05) 40%, rgba(28,21,16,.05) 55%, rgba(28,21,16,.72) 100%); }
+.hero-body { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 110px 24px 120px; }
+.hero-logo-ring { width: 148px; height: 148px; border-radius: 50%; background: rgba(247,243,237,.15); border: 1px solid rgba(247,243,237,.3); display: flex; align-items: center; justify-content: center; margin-bottom: 30px; overflow: hidden; animation: fadeUp .9s .1s ease both; }
+.hero-logo-ring img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.hero-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: rgba(247,243,237,.65); margin-bottom: 14px; animation: fadeUp .9s .2s ease both; }
+.hero-h1 { font-family: var(--ff-disp); font-weight: 300; line-height: .95; font-size: clamp(62px,10vw,120px); color: #F7F3ED; letter-spacing: .01em; margin-bottom: 10px; animation: fadeUp .9s .28s ease both; }
+.hero-h1 em { font-style: italic; color: rgba(196,162,101,.9); }
+.hero-tagline { font-size: 15px; color: rgba(247,243,237,.72); line-height: 1.8; max-width: 420px; margin: 0 auto 36px; animation: fadeUp .9s .38s ease both; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; animation: fadeUp .9s .48s ease both; }
+.h-btn-light { background: var(--cream); color: var(--dark); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 13px 32px; border-radius: var(--radius); border: none; transition: all var(--tr); }
+.h-btn-light:hover { background: var(--cream3); }
+.h-btn-ghost { background: transparent; border: 1px solid rgba(247,243,237,.38); color: var(--cream); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 13px 32px; border-radius: var(--radius); transition: all var(--tr); }
+.h-btn-ghost:hover { border-color: rgba(247,243,237,.7); }
+.hero-stats { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; display: grid; grid-template-columns: repeat(4,1fr); background: rgba(28,21,16,.62); backdrop-filter: blur(12px); border-top: 0.5px solid rgba(247,243,237,.1); animation: fadeUp .9s .58s ease both; }
+.h-stat { padding: 20px 0; text-align: center; border-right: 0.5px solid rgba(247,243,237,.08); }
+.h-stat:last-child { border-right: none; }
+.h-stat-n { font-family: var(--ff-disp); font-size: 26px; font-weight: 400; color: rgba(196,162,101,.9); line-height: 1; }
+.h-stat-l { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: rgba(247,243,237,.45); margin-top: 4px; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:none} }
+
+/* TRUST BAR */
+.trust-bar { background: var(--dark); display: grid; grid-template-columns: repeat(4,1fr); }
+.trust-item { display: flex; align-items: center; gap: 14px; padding: 26px 28px; border-right: 0.5px solid rgba(247,243,237,.07); justify-content: center; }
+.trust-item:last-child { border-right: none; }
+.t-icon { font-size: 20px; flex-shrink: 0; }
+.t-title { font-size: 12px; font-weight: 600; color: var(--cream); margin-bottom: 2px; }
+.t-sub { font-size: 10px; color: rgba(247,243,237,.4); }
+
+/* SECTION */
+.sec { padding: 88px 0; background: var(--cream); }
+.sec-inner { max-width: 1200px; margin: 0 auto; padding: 0 52px; }
+.sec-header { margin-bottom: 48px; }
+.sec-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--warm); margin-bottom: 10px; }
+.sec-title { font-family: var(--ff-disp); font-size: clamp(34px,4vw,52px); font-weight: 400; line-height: 1.1; color: var(--dark); }
+.sec-title em { font-style: italic; color: var(--brown); }
+.sec-sub { font-size: 14px; color: var(--muted); line-height: 1.85; max-width: 480px; margin-top: 12px; }
+.p-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); gap: 22px; }
+
+/* ORDER */
+.order-sec { background: var(--cream2); border-top: 0.5px solid var(--border); }
+.order-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 68px; align-items: start; }
+.order-info .order-desc { font-size: 14px; color: var(--muted); line-height: 1.9; margin-bottom: 26px; }
+.trust-list { list-style: none; display: flex; flex-direction: column; gap: 11px; margin-bottom: 28px; }
+.trust-list li { display: flex; align-items: center; gap: 11px; font-size: 13px; color: var(--muted); }
+.t-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+.pay-chips { display: flex; gap: 7px; flex-wrap: wrap; }
+.chip { font-size: 10px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; padding: 6px 13px; border-radius: var(--radius); border: 0.5px solid var(--border2); color: var(--muted); background: var(--surface); }
+.form-shell { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 40px; }
+.form-hdg { font-family: var(--ff-disp); font-size: 26px; font-weight: 400; color: var(--dark); margin-bottom: 26px; }
+.f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.f-group { display: flex; flex-direction: column; gap: 6px; }
+.f-group.full { grid-column: 1/-1; }
+.f-label { font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.f-input { background: var(--cream); border: 0.5px solid var(--border); color: var(--text); font-family: var(--ff-body); font-size: 14px; padding: 11px 14px; border-radius: var(--radius); outline: none; transition: border-color var(--tr); width: 100%; }
+.f-input:focus { border-color: var(--warm); box-shadow: 0 0 0 3px rgba(155,122,82,.09); }
+.f-input::placeholder { color: var(--cream3); }
+select.f-input option { background: white; }
+textarea.f-input { resize: vertical; min-height: 88px; }
+.f-note { font-size: 11px; color: var(--muted); text-align: center; line-height: 1.7; grid-column: 1/-1; margin-top: 4px; }
+
+@media (max-width: 900px) {
+  .sec-inner { padding: 0 20px; }
+  .order-grid { grid-template-columns: 1fr; gap: 36px; }
+  .f-grid { grid-template-columns: 1fr; }
+  .trust-bar { grid-template-columns: 1fr 1fr; }
+  .trust-item { border-right: none; border-bottom: 0.5px solid rgba(247,243,237,.07); }
+  .hero-stats { grid-template-columns: repeat(2,1fr); }
+}
+</style>

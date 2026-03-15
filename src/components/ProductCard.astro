@@ -1,0 +1,103 @@
+---
+const { product } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const badgeClass = product.badge === 'জনপ্রিয়' ? 'badge popular'
+                 : product.badge === 'লিমিটেড'  ? 'badge limited'
+                 : 'badge';
+---
+<a href={`${base}products/${product.slug}/`} class="p-card">
+  <div class="p-img">
+    <img
+      src={`${base}images/${product.image}`}
+      alt={`${product.name} — ${product.subtitle}`}
+      loading="lazy"
+      onerror="this.parentElement.classList.add('no-img'); this.style.display='none';"
+    />
+    {product.badge && <span class={badgeClass}>{product.badge}</span>}
+    <div class="p-quick-btn">দ্রুত দেখুন →</div>
+  </div>
+  <div class="p-body">
+    <div class="p-cat">
+      {product.category === 'threepiece' ? 'থ্রি-পিস' : 'শাড়ি'}
+    </div>
+    <div class="p-name">{product.name}</div>
+    {product.subtitle && <div class="p-sub">{product.subtitle}</div>}
+    <p class="p-desc">{product.description}</p>
+    <div class="p-foot">
+      <div class="p-price">
+        ৳{product.price.toLocaleString('en-IN')}
+        <small>থেকে</small>
+      </div>
+      <span class="p-order-link">অর্ডার করুন →</span>
+    </div>
+  </div>
+</a>
+
+<style>
+.p-card {
+  display: block;
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: box-shadow var(--tr), transform var(--tr), border-color var(--tr);
+  color: var(--text);
+}
+.p-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+  border-color: var(--border2);
+}
+.p-img {
+  width: 100%; aspect-ratio: 3/4;
+  background: var(--cream2);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.p-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.p-card:hover .p-img img { transform: scale(1.04); }
+.p-img.no-img::after {
+  content: '👗';
+  font-size: 56px;
+}
+.p-img .badge {
+  position: absolute; top: 14px; left: 14px;
+}
+.p-quick-btn {
+  position: absolute; bottom: 14px; right: 14px;
+  background: rgba(247,243,237,.95); color: var(--dark);
+  font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 7px 14px; border-radius: var(--radius);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity var(--tr), transform var(--tr);
+}
+.p-card:hover .p-quick-btn { opacity: 1; transform: translateY(0); }
+.p-body { padding: 18px 20px 22px; }
+.p-cat {
+  font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--warm); margin-bottom: 5px;
+}
+.p-name {
+  font-family: var(--ff-disp); font-size: 20px; font-weight: 400;
+  color: var(--dark); line-height: 1.2; margin-bottom: 3px;
+}
+.p-sub { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+.p-desc {
+  font-size: 12px; color: var(--muted); line-height: 1.65; margin-bottom: 16px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.p-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 14px; border-top: 0.5px solid var(--border);
+}
+.p-price {
+  font-family: var(--ff-disp); font-size: 22px; font-weight: 400; color: var(--dark);
+}
+.p-price small { font-family: var(--ff-body); font-size: 10px; color: var(--muted); font-weight: 400; }
+.p-order-link {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--brown); border-bottom: 0.5px solid var(--brown);
+  padding-bottom: 1px; transition: color var(--tr);
+}
+.p-card:hover .p-order-link { color: var(--dark); border-color: var(--dark); }
+</style>

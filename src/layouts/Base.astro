@@ -1,0 +1,93 @@
+---
+import '../styles/global.css';
+const { title, description, ogImage, ogUrl } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const siteName = 'Aurelia Craft';
+const siteDesc = description || 'বাংলাদেশের নারীদের জন্য সেরা মানের থ্রি-পিস ও শাড়ির এক্সক্লুসিভ কালেকশন।';
+const pageTitle = title ? `${title} — ${siteName}` : `${siteName} — থ্রি-পিস ও শাড়ির কালেকশন`;
+const pageUrl = ogUrl || 'https://faisalnabil.github.io/aurelia-craft/';
+const pageImg = ogImage || `${base}images/cover.png`;
+---
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={siteDesc} />
+
+  <!-- Open Graph (Facebook preview) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={siteName} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={siteDesc} />
+  <meta property="og:image" content={pageImg} />
+  <meta property="og:url" content={pageUrl} />
+
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={siteDesc} />
+  <meta name="twitter:image" content={pageImg} />
+
+  <link rel="icon" type="image/jpeg" href={`${base}images/logo.jpg`} />
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href={base} class="nav-logo">
+    <img src={`${base}images/logo.jpg`} alt="Aurelia Craft" />
+  </a>
+  <ul class="nav-links">
+    <li><a href={base}>হোম</a></li>
+    <li><a href={`${base}#catalog`}>কালেকশন</a></li>
+    <li><a href={`${base}#order`}>অর্ডার</a></li>
+  </ul>
+  <a href={`${base}#order`} class="nav-cta">অর্ডার করুন</a>
+</nav>
+
+<!-- PAGE CONTENT -->
+<main>
+  <slot />
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div>
+    <div class="footer-logo">
+      <img src={`${base}images/logo.jpg`} alt="Aurelia Craft" />
+    </div>
+    <p class="footer-desc">
+      বাংলাদেশের নারীদের জন্য প্রিমিয়াম থ্রি-পিস ও শাড়ির কালেকশন।<br/>প্রতিষ্ঠিত ২০২৩।
+    </p>
+  </div>
+  <div class="footer-col">
+    <h6>কালেকশন</h6>
+    <a href={`${base}#catalog`}>সব পণ্য</a>
+    <a href={`${base}#catalog`}>থ্রি-পিস</a>
+    <a href={`${base}#catalog`}>শাড়ি</a>
+  </div>
+  <div class="footer-col">
+    <h6>যোগাযোগ</h6>
+    <a href="https://facebook.com/aurelia.craft.home" target="_blank">Facebook Page</a>
+    <a href="https://wa.me/8801XXXXXXXXX" target="_blank">WhatsApp</a>
+    <a href={`${base}#order`}>অর্ডার ফর্ম</a>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© ২০২৫ Aurelia Craft. সর্বস্বত্ব সংরক্ষিত।</p>
+  <p style="color: #C4A265;">facebook.com/aurelia.craft.home</p>
+</div>
+
+<!-- Scroll reveal -->
+<script>
+  const obs = new IntersectionObserver(
+    es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }),
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>

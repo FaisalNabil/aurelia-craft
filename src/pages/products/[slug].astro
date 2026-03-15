@@ -1,0 +1,179 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { products, WHATSAPP } from '../../data/products.js';
+
+export function getStaticPaths() {
+  return products.map(p => ({ params: { slug: p.slug }, props: { product: p } }));
+}
+
+const { product } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const relatedProducts = product.related
+  ? products.filter(p => product.related.includes(p.slug))
+  : [];
+
+const pageUrl = `https://faisalnabil.github.io/aurelia-craft/products/${product.slug}/`;
+const ogImage = `https://faisalnabil.github.io/aurelia-craft/images/${product.image}`;
+const waMsg = encodeURIComponent(
+  `আমি এই পণ্যটি অর্ডার করতে চাই:\n\n${product.name} — ${product.subtitle}\nদাম: ৳${product.price}\n\nআমার তথ্য:\nনাম: \nফোন: \nঠিকানা: \nপেমেন্ট: `
+);
+---
+<Base
+  title={`${product.name} — ${product.subtitle}`}
+  description={product.description}
+  ogImage={ogImage}
+  ogUrl={pageUrl}
+>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-wrap">
+  <nav class="breadcrumb">
+    <a href={base}>হোম</a>
+    <span class="bc-sep">›</span>
+    <a href={`${base}#catalog`}>কালেকশন</a>
+    <span class="bc-sep">›</span>
+    <span>{product.name}</span>
+  </nav>
+</div>
+
+<!-- PRODUCT DETAIL -->
+<section class="product-sec">
+  <div class="product-inner">
+
+    <!-- LEFT: Image -->
+    <div class="product-gallery reveal">
+      <div class="product-main-img">
+        <img
+          src={`${base}images/${product.image}`}
+          alt={`${product.name} — ${product.subtitle}`}
+          onerror="this.parentElement.classList.add('no-img'); this.style.display='none';"
+        />
+        {product.badge && (
+          <span class={`badge${product.badge === 'জনপ্রিয়' ? ' popular' : product.badge === 'লিমিটেড' ? ' limited' : ''}`}>
+            {product.badge}
+          </span>
+        )}
+      </div>
+    </div>
+
+    <!-- RIGHT: Info -->
+    <div class="product-info reveal">
+      <p class="prod-cat">
+        {product.category === 'threepiece' ? 'থ্রি-পিস' : 'শাড়ি'}
+        {product.fabric && ` · ${product.fabric}`}
+      </p>
+      <h1 class="prod-name">{product.name}</h1>
+      {product.subtitle && <p class="prod-sub">{product.subtitle}</p>}
+      <div class="prod-price">৳{product.price.toLocaleString('en-IN')} <small>থেকে</small></div>
+
+      <p class="prod-desc">{product.description}</p>
+
+      <!-- Specs -->
+      <div class="prod-specs">
+        {product.fabric    && <div class="spec-row"><span class="spec-k">কাপড়</span><span class="spec-v">{product.fabric}</span></div>}
+        {product.design    && <div class="spec-row"><span class="spec-k">ডিজাইন</span><span class="spec-v">{product.design}</span></div>}
+        {product.occasion  && <div class="spec-row"><span class="spec-k">অনুষ্ঠান</span><span class="spec-v">{product.occasion}</span></div>}
+      </div>
+
+      <!-- Details list -->
+      {product.details && product.details.length > 0 && (
+        <ul class="prod-details">
+          {product.details.map(d => <li>{d}</li>)}
+        </ul>
+      )}
+
+      <!-- CTAs -->
+      <div class="prod-cta">
+        <a
+          href={`https://wa.me/${WHATSAPP}?text=${waMsg}`}
+          target="_blank"
+          class="btn-whatsapp"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp-এ অর্ডার করুন
+        </a>
+        <a href={`${base}#order`} class="btn-outline">অর্ডার ফর্ম পূরণ করুন</a>
+      </div>
+
+      <!-- Trust micro -->
+      <div class="prod-trust">
+        <div class="pt-item">📦 সারা বাংলাদেশে ডেলিভারি</div>
+        <div class="pt-item">🔄 রিটার্ন পলিসি</div>
+        <div class="pt-item">💳 COD · bKash · নগদ</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RELATED PRODUCTS -->
+{relatedProducts.length > 0 && (
+  <section class="related-sec">
+    <div class="related-inner">
+      <div class="sec-header reveal">
+        <p class="sec-eyebrow">✦ আরও দেখুন</p>
+        <h2 class="sec-title">সম্পর্কিত <em>কালেকশন</em></h2>
+      </div>
+      <div class="p-grid reveal">
+        {relatedProducts.map(p => <ProductCard product={p} />)}
+      </div>
+    </div>
+  </section>
+)}
+
+</Base>
+
+<style>
+.breadcrumb-wrap { padding: 86px 52px 0; background: var(--cream); }
+.breadcrumb { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.breadcrumb a { color: var(--muted); transition: color var(--tr); }
+.breadcrumb a:hover { color: var(--dark); }
+.bc-sep { opacity: .5; }
+
+.product-sec { background: var(--cream); padding: 40px 0 88px; }
+.product-inner { max-width: 1200px; margin: 0 auto; padding: 0 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+
+.product-main-img { position: relative; border-radius: var(--radius); overflow: hidden; background: var(--cream2); aspect-ratio: 3/4; }
+.product-main-img img { width: 100%; height: 100%; object-fit: cover; }
+.product-main-img.no-img::after { content: '👗'; font-size: 80px; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.product-main-img .badge { position: absolute; top: 16px; left: 16px; }
+
+.prod-cat { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--warm); margin-bottom: 8px; margin-top: 8px; }
+.prod-name { font-family: var(--ff-disp); font-size: clamp(32px,4vw,48px); font-weight: 400; line-height: 1.1; color: var(--dark); margin-bottom: 4px; }
+.prod-sub { font-size: 15px; color: var(--muted); margin-bottom: 18px; }
+.prod-price { font-family: var(--ff-disp); font-size: 32px; font-weight: 400; color: var(--dark); margin-bottom: 22px; }
+.prod-price small { font-family: var(--ff-body); font-size: 12px; color: var(--muted); }
+.prod-desc { font-size: 14px; color: var(--muted); line-height: 1.85; margin-bottom: 24px; }
+
+.prod-specs { display: flex; flex-direction: column; gap: 0; margin-bottom: 22px; border-top: 0.5px solid var(--border); }
+.spec-row { display: grid; grid-template-columns: 80px 1fr; gap: 12px; padding: 10px 0; border-bottom: 0.5px solid var(--border); font-size: 13px; }
+.spec-k { color: var(--muted); font-weight: 500; }
+.spec-v { color: var(--text); }
+
+.prod-details { list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 8px; }
+.prod-details li { font-size: 13px; color: var(--muted); display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+.prod-details li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 6px; }
+
+.prod-cta { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+.btn-whatsapp { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #25D366; color: white; font-size: 13px; font-weight: 700; letter-spacing: .06em; padding: 14px 28px; border-radius: var(--radius); border: none; transition: background var(--tr); text-align: center; }
+.btn-whatsapp:hover { background: #1ebe5d; color: white; }
+
+.prod-trust { display: flex; gap: 16px; flex-wrap: wrap; padding-top: 18px; border-top: 0.5px solid var(--border); }
+.pt-item { font-size: 11px; color: var(--muted); }
+
+.related-sec { background: var(--cream2); border-top: 0.5px solid var(--border); padding: 72px 0; }
+.related-inner { max-width: 1200px; margin: 0 auto; padding: 0 52px; }
+.sec-header { margin-bottom: 40px; }
+.sec-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--warm); margin-bottom: 8px; }
+.sec-title { font-family: var(--ff-disp); font-size: clamp(28px,3.5vw,42px); font-weight: 400; line-height: 1.1; color: var(--dark); }
+.sec-title em { font-style: italic; color: var(--brown); }
+.p-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 20px; }
+
+@media (max-width: 900px) {
+  .breadcrumb-wrap { padding: 82px 20px 0; }
+  .product-inner { grid-template-columns: 1fr; gap: 32px; padding: 0 20px; }
+  .related-inner { padding: 0 20px; }
+  .prod-cta { flex-direction: column; }
+}
+</style>
