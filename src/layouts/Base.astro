@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Analytics from '@vercel/analytics/astro';
 const { title, description, ogImage, ogUrl } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const siteName = 'Aurelia Craft';
@@ -124,6 +125,7 @@ const year = new Date().getFullYear();
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 
+<Analytics />
 </body>
 </html>
 
